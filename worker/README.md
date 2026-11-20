@@ -59,7 +59,7 @@ invalid filter answers 400. Columns match the Python export, plus `asked_at_ariz
 ## Public site
 
 Deployed with `npx wrangler deploy` in `worker/` (after `npm run build` in `web/`):
-https://aging-lifestyle-research-explorer.juannadal.workers.dev. The site and `/api/*` share one address, so a
+https://capstone.juannadal.com. The site and `/api/*` share one address, so a
 Cloudflare Access sign-in on it covers both.
 
 - `LOG_QUESTIONS` is `"true"` in `wrangler.jsonc` since 2026-10-12 (every question is saved for the capstone
