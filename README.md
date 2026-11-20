@@ -8,6 +8,16 @@ This is the INFO 698 capstone project (University of Arizona, Fall 2026) for the
 - **Mentor:** Dr. Xiao Hu
 - **Status:** Working app, live behind a sign-in at https://capstone.juannadal.com
 
+## Accessing the live site
+
+The live site at https://capstone.juannadal.com is protected by Cloudflare Access. When you visit, you will see a login page:
+
+1. Enter your **arizona.edu** email address
+2. Check your email for a one-time access code from Cloudflare
+3. Enter the code to access the app
+
+Access is restricted to University of Arizona accounts.
+
 ## Features
 
 1. **Patient Search Interface**: a React page designed for readability (large text, high contrast, WCAG 2.1 AA).
