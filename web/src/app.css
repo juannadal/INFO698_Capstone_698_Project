@@ -1,0 +1,158 @@
+/* Page layout. Component styles (hl-*) are in design/bundle.css; every value here is a token from design/tokens.css. */
+html, body { margin: 0; background: var(--surface); }
+a { color: inherit; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.page {
+  min-height: 100vh; box-sizing: border-box; display: flex; flex-direction: column;
+  background: var(--surface); color: var(--ink); font-family: var(--font-sans); font-size: 18px; line-height: 28px;
+}
+
+/* Header */
+.site-header { border-bottom: 1px solid var(--line); background: var(--surface-raised); }
+.site-header-inner {
+  max-width: 808px; margin: 0 auto; padding: 0 var(--space-6); box-sizing: border-box;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--space-8); min-height: 72px;
+}
+.site-name {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font-size: 20px; line-height: 28px; font-weight: 700; color: var(--ink); text-decoration: none;
+}
+.site-nav { display: flex; flex-wrap: wrap; gap: 0 var(--space-6); }
+.nav-link {
+  display: inline-flex; align-items: center; min-height: 48px; font-size: 16px; line-height: 24px;
+  font-weight: 600; text-decoration: underline 2px; text-underline-offset: 4px;
+}
+.nav-link[aria-current="page"] { font-weight: 700; color: var(--ink); text-decoration: none; }
+
+/* Main column */
+.site-main { flex-grow: 1; }
+.column {
+  max-width: 808px; margin: 0 auto; padding: var(--space-12) var(--space-6) var(--space-16); box-sizing: border-box;
+  display: flex; flex-direction: column; gap: var(--space-8);
+}
+.stack-4 { display: flex; flex-direction: column; gap: var(--space-4); }
+.stack-3 { display: flex; flex-direction: column; gap: var(--space-3); }
+.stack-2 { display: flex; flex-direction: column; gap: var(--space-2); }
+.stack-1 { display: flex; flex-direction: column; gap: var(--space-1); }
+.row-3 { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+/* Type */
+h1, h2, h3, p { margin: 0; }
+.title-xl { font-size: 40px; line-height: 48px; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+.title-l { font-size: 28px; line-height: 36px; font-weight: 700; }
+.title-m { font-size: 22px; line-height: 30px; font-weight: 700; }
+.lead { max-width: 62ch; font-size: 20px; line-height: 32px; }
+.small-muted { font-size: 16px; line-height: 24px; color: var(--ink-muted); }
+.prose { max-width: 66ch; }
+.list { margin: 0; padding: 0 0 0 var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); max-width: 62ch; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; margin: 0;
+}
+
+/* Links that stand alone (example questions, "See what research...") */
+.text-link { font-weight: 600; text-decoration: underline 2px; text-underline-offset: 4px; }
+.link-list { display: flex; flex-direction: column; align-items: flex-start; }
+.block-link {
+  display: inline-flex; align-items: center; min-height: 48px; font-size: 18px; line-height: 28px;
+  font-weight: 600; text-decoration: underline 2px; text-underline-offset: 4px;
+}
+
+/* "How it works" steps on the start page */
+.how-steps {
+  margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+.how-step, .panel {
+  box-sizing: border-box; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-6);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised);
+}
+.how-step-n { font-size: 16px; line-height: 24px; font-weight: 700; color: var(--ink-muted); }
+.how-step-name { font-weight: 700; }
+.how-step-text { font-size: 16px; line-height: 24px; }
+
+/* "Answer written by" menu under the question box. A native select (keyboard and screen-reader friendly), styled
+   like the question box: same border, radius, colours and focus ring, at button height. */
+.model-picker { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.model-picker-label { font-size: 16px; line-height: 24px; font-weight: 600; }
+.model-picker-select {
+  box-sizing: border-box; min-height: 48px; padding: 0 var(--space-4); border: 2px solid var(--line-strong);
+  border-radius: var(--radius-md); background: var(--surface-raised); color: var(--ink);
+  font: 400 18px/28px var(--font-sans); cursor: pointer; max-width: 100%;
+}
+.model-picker-select:focus-visible { outline: none; border-color: var(--brand); box-shadow: var(--focus-ring); }
+
+/* An earlier answer's sources, folded away under a toggle. */
+.sources-fold summary { display: flex; align-items: center; min-height: 48px; cursor: pointer; }
+.sources-fold[open] summary { margin-bottom: var(--space-4); }
+/* Our own arrow before the label (right when folded, down when open), in place of the browser's marker. */
+.sources-fold summary { list-style: none; }
+.sources-fold summary::-webkit-details-marker { display: none; }
+.sources-fold summary::before { content: '\25B6'; display: inline-block; font-size: 0.8em; margin-right: var(--space-2); text-decoration: none; }
+.sources-fold[open] summary::before { content: '\25BC'; }
+
+/* Chat page (/chat): the reader's messages on the right, replies on the left, the typing box pinned to the bottom. */
+.chat { display: flex; flex-direction: column; gap: var(--space-6); }
+.chat-title-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.chat-menus { display: flex; flex-direction: column; gap: var(--space-2); }
+.chat-log { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-4); }
+.chat-msg { display: flex; }
+.chat-msg-you { justify-content: flex-end; }
+.chat-bubble {
+  box-sizing: border-box; max-width: 100%; padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised);
+}
+.chat-msg-bot .chat-bubble { width: 100%; border-bottom-left-radius: var(--radius-sm); box-shadow: var(--shadow-answer); }
+.chat-msg-you .chat-bubble {
+  max-width: min(85%, 560px); border-color: var(--brand); background: var(--brand-soft);
+  border-bottom-right-radius: var(--radius-sm); white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.chat-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); }
+.chat-starter {
+  display: block; padding: var(--space-1) 0; border: 0; background: none; color: inherit; cursor: pointer;
+  font: inherit; font-weight: 600; text-align: left; min-height: 44px;
+}
+.chat-inline-link { padding: 0; border: 0; background: none; color: inherit; cursor: pointer; font: inherit; font-weight: 600; text-align: left; }
+.chat-typing { display: inline-flex; align-items: center; gap: var(--space-3); width: auto !important; color: var(--ink-muted); }
+.chat-dots { display: inline-flex; gap: 4px; }
+.chat-dots i { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--ink-muted); animation: chat-dot 1.2s infinite ease-in-out; }
+.chat-dots i:nth-child(2) { animation-delay: 0.2s; }
+.chat-dots i:nth-child(3) { animation-delay: 0.4s; }
+@keyframes chat-dot { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .chat-dots i { animation: none; opacity: 0.6; } }
+.chat-compose {
+  position: sticky; bottom: 0; z-index: 1; display: flex; flex-direction: column; gap: var(--space-2);
+  margin: 0 calc(-1 * var(--space-6)); padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--line); background: var(--surface);
+}
+.chat-form { display: flex; gap: var(--space-3); align-items: flex-end; }
+.chat-input {
+  box-sizing: border-box; flex: 1 1 auto; min-width: 0; min-height: 56px; max-height: 160px; resize: vertical;
+  padding: var(--space-3) var(--space-4); border: 2px solid var(--line-strong); border-radius: var(--radius-md);
+  background: var(--surface-raised); color: var(--ink); font: 400 18px/28px var(--font-sans);
+}
+.chat-input:focus { outline: 2px solid transparent; border-color: var(--brand); box-shadow: var(--focus-ring); }
+.chat-form .hl-btn { min-height: 56px; }
+/* On a phone, slimmer bubbles leave more room for the text and the source cards inside them. */
+@media (max-width: 600px) {
+  .chat-bubble { padding: var(--space-3) var(--space-4); }
+  .chat-compose { padding: var(--space-3) var(--space-6); }
+}
+
+
+/* Footer */
+.site-footer { background: var(--surface-sunk); }
+.site-footer-inner {
+  max-width: 808px; margin: 0 auto; padding: var(--space-8) var(--space-6); box-sizing: border-box;
+  display: flex; flex-direction: column; gap: var(--space-2); font-size: 16px; line-height: 24px; color: var(--ink-muted);
+}
+
+/* A printed answer is the answer, the notice and the sources on white, with link addresses written out. */
+@media print {
+  :root { --surface: #fff; --surface-raised: #fff; --surface-sunk: #fff; --shadow-answer: none; }
+  .site-header, .site-footer, .hl-question, .model-picker, .no-print { display: none !important; }
+  .chat-compose { position: static; }
+  .column { padding: 0; }
+  .hl-source-title a::after { content: " (" attr(href) ")"; font-weight: 400; word-break: break-all; }
+}

@@ -1,0 +1,51 @@
+n,kind,question,status,seconds,corrected,grade,sources,answer
+1,in_scope,Can exercise slow down memory loss?,answered,5.4,,9,6,Exercise may slow down memory loss. One study found exercise improved memory in older adults. Another study found physical activity improved memory in women with heart disease. Exercise also improved cognitive function in older adults. Exercise may slow down memory loss in people with Alzheimer's di
+2,typo,Can walking help with alzheimers?,answered,4.9,Can walking help with alzheimer?,6,6,Walking may help with Alzheimer's. One study found walking lowered risk. People with Alzheimer's walked more with help. Walking was studied in people with Alzheimer's.
+3,off_topic,Who won the World Series last year?,no_answer,0.8,,,0,
+4,off_topic,How do I treat a bee sting?,no_answer,0.9,,,0,
+5,off_topic,What are the side effects of amoxicillin?,no_answer,0.8,,,0,
+6,typo,Is caffiene bad for older adults?,answered,3.4,Is caffeine bad for older adults?,6,5,Caffeine is not bad for older adults. One study found caffeine helps cognitive function. Caffeine also lowers risk of disability.
+7,in_scope,Does sitting all day raise the risk of diabetes?,answered,3.9,,4,2,Sitting all day may raise diabetes risk. One study found sitting 8 hours a day increased risk. Sitting 10 hours a day also increased risk.
+8,in_scope,Can eating nuts lower cholesterol?,answered,3.4,,9,4,Eating nuts may lower cholesterol. One study found nuts lowered bad cholesterol.
+9,in_scope,Does dancing help older adults with balance?,answered,3.4,,9,3,Dancing helps older adults with balance. One study found dance therapy improved balance in women over 60.
+10,in_scope,Does loneliness affect health in older adults?,answered,2.9,,8,3,Loneliness affects health in older adults. One study found loneliness is linked to heart disease.
+11,in_scope,How long should I stretch each day?,answered,3.9,,5,3,One study found 30 seconds is optimal for stretching. Stretching for 30 seconds increased range of motion. Stretching for 60 seconds had negative effects.
+12,off_topic,What is the best car for a family of five?,no_answer,0.8,,,0,
+13,in_scope,Do older people need to drink more water?,answered,2.9,,6,3,Older people may need more water. One study found older adults had low water intake.
+14,in_scope,Is snoring a sign of a health problem?,answered,4.4,,4,3,Snoring is linked to high blood pressure. One study found snoring is common in workers. Snoring is also linked to diabetes and high cholesterol.
+15,in_scope,Does lifting weights help prevent osteoporosis?,answered,3.4,,12,3,Lifting weights may help prevent osteoporosis. One study found that high-impact exercise lowered osteoporosis risk.
+16,in_scope,Does stress make blood pressure go up?,answered,2.9,,1,4,Stress is linked to high blood pressure. One study found stress makes blood pressure go up.
+17,typo,Is high colesterol dangerous for women over 50?,answered,4.4,Is high cholesterol dangerous for women over 50?,7,4,High cholesterol is linked to heart disease in women. One study found high cholesterol in women is a major risk factor. Women with high cholesterol have a higher risk of heart disease.
+18,in_scope,Can melatonin help older adults sleep?,answered,3.4,,9,4,Melatonin helps older adults sleep. One study found melatonin increased sleep duration. Melatonin is safe for older adults.
+19,in_scope,Is a low carb diet safe for older adults?,answered,3.9,,6,1,One study found a low-carb diet is safe for older adults. Older adults had lower blood glucose on a low-carb diet.
+20,typo,How much protien do seniors need?,answered,4.9,How much protein do seniors need?,4,4,One study found seniors need more protein than recommended. Seniors need 0.4-0.5 g/kg BM per meal. One study found 0.54 g/kg/day is good for muscle.
+21,in_scope,Does eating fish help my brain as I age?,answered,5.9,,5,4,Eating fish may help the brain as people age. One study found that eating fish was linked to slower cognitive decline. Higher fish consumption was linked to better brain health. Eating fish may lower the risk of Alzheimer's disease.
+22,typo,Does streching help with balanse?,answered,4.4,Does stretching help with balance?,5,5,Stretching helps with balance. One study found stretching improved balance in older adults. Stretching also improved balance in people with stroke. Stretching helped with walking too.
+23,in_scope,Is breakfast important for older adults?,answered,3.9,,7,3,Breakfast is important for older adults. One study found low-quality breakfasts linked to poorer kidney function.
+24,in_scope,Is biking good exercise for people with arthritis?,answered,3.9,,10,3,Biking is not often studied for arthritis. One study found walking lowered pain in adults with arthritis.
+25,off_topic,How do I reset my email password?,no_answer,0.8,,,0,
+26,typo,Does insomina get worse with age?,answered,4.4,Does insomnia get worse with age?,7,2,"One study found insomnia gets worse with age in later-born people. In a study of 70-year-olds, insomnia increased with age."
+27,in_scope,How many steps a day should a 60 year old take?,answered,3.8,,7,2,"One study found 7,000 steps/day is good for older adults. Taking 7,000 steps/day helps lower-extremity performance."
+28,in_scope,Why do I wake up so early now that I'm older?,answered,3.8,,3,4,One study found older people wake up earlier. Older adults have less deep sleep.
+29,in_scope,Does drinking green tea have health benefits?,answered,4.9,,4,5,Drinking green tea has health benefits. One study found green tea lowers risk of death. Green tea helps elderly women's cognitive functions. Green tea is linked to better oral health.
+30,in_scope,Does a plant based diet help with weight loss?,answered,4.9,,5,5,A plant-based diet may help with weight loss. One study found that people who ate a plant-based diet had lower weight regain. Plant-based diets may support modest improvements in weight.
+31,in_scope,Does sugar increase the risk of dementia?,answered,4.9,,8,2,One study found sugar intake linked to higher dementia risk. High sugar intake was linked to dementia in one study.
+32,off_topic,Is it going to rain tomorrow in Tucson?,no_answer,0.8,,,0,
+33,in_scope,Is it safe to run if I have bad knees?,answered,3.9,,4,6,Running is safe for some people with bad knees. One study found running did not increase symptoms. Running can be good for knee health.
+34,in_scope,Is red meat bad for you after 50?,answered,3.4,,3,5,Eating red meat may be bad for people after 50. One study found red meat is linked to heart disease. Red meat is also linked to higher risk of dementia.
+35,in_scope,Does screen time before bed affect sleep?,answered,3.8,,4,4,Screen time before bed affects sleep. One study found screen use before bed disrupts sleep.
+36,off_topic,What should I do about a sprained ankle?,answered,3.4,,5,3,"One study found early fascia work helps a sprained ankle. In one study, people with ankle sprains got better with treatment."
+37,typo,Is the keto deit safe after 60?,answered,3.3,Is the keto diet safe after 60?,4,3,One study found the keto diet safe for older adults. Older adults had no bad side effects.
+38,in_scope,How does alcohol affect sleep in older adults?,answered,5.4,,7,4,Alcohol affects sleep in older adults differently. One study found alcohol use was not linked to poor sleep. Alcohol use was linked to better sleep quality in women.
+39,in_scope,Can gardening count as exercise?,answered,3.9,,9,6,Gardening can be exercise. One study found gardening lowered odds of poor health. Gardening is physical activity. Gardening tasks are low-to-moderate intensity.
+40,typo,Does excercise help with diabetis?,answered,2.9,Does excercise help with diabetes?,7,4,Exercise helps with diabetes. One study found exercise lowered blood sugar.
+41,off_topic,How do I cook a turkey?,no_answer,0.8,,,0,
+42,in_scope,Can losing weight help with knee pain?,answered,4.4,,5,5,Losing weight may help with knee pain. One study found weight loss lowered knee pain. Weight loss can improve knee osteoarthritis symptoms.
+43,in_scope,Should older adults take a multivitamin?,answered,4.4,,11,4,Older adults may take multivitamins. One study found multivitamins lower cancer risk. Multivitamins improve memory.
+44,typo,Does swiming help arthritis pain?,answered,2.9,Does swimming help arthritis pain?,6,1,Swimming helps arthritis pain. One study found swimming lowered joint pain.
+45,in_scope,Can yoga help my lower back pain?,answered,3.4,,4,4,Yoga may help lower back pain. One study found yoga lowered back pain. Yoga also improved sleep.
+46,in_scope,Does going to bed at the same time help sleep?,answered,4.4,,1,2,One study found going to bed at the same time helps sleep. People who went to bed at the same time had better sleep.
+47,typo,Can vitamen B12 help memory?,answered,3.9,Can vitamin B12 help memory?,7,3,Vitamin B12 helps memory in some people. One study found vitamin B12 is linked to better memory. Vitamin B12 is important for the brain.
+48,in_scope,Does walking after dinner help with blood sugar?,answered,4.4,,7,4,One study found walking after dinner lowers blood sugar. Walking after meals is linked to lower blood sugar.
+49,in_scope,What kind of exercise is best for heart health after 50?,answered,4.9,,10,4,One study found aerobic exercise is best for heart health. Exercise lowered blood pressure in postmenopausal women. Regular exercise improved heart health in older adults. Combined exercise protected against age-associated decline in vascular function.
+50,in_scope,Does volunteering help people live longer?,answered,5.4,,10,4,One study found volunteering lowered mortality risk. Volunteering was linked to lower mortality risk in some studies.

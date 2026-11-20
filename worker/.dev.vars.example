@@ -1,0 +1,5 @@
+# Local development settings for `wrangler dev`. Copy to .dev.vars.
+# Save questions to query_log while testing locally (the public site has it off; see wrangler.jsonc).
+LOG_QUESTIONS=true
+# The Claude option needs ANTHROPIC_API_KEY. Prefer passing it from 1Password when starting wrangler dev (worker/README.md,
+# "Claude option") over writing it here.

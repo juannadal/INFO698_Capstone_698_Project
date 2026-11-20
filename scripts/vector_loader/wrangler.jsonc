@@ -1,0 +1,10 @@
+// A one-off Worker for loading: run with `npx wrangler dev`, then scripts/load_cloudflare.py vectors posts
+// batches of chunks to it. The AI and Vectorize bindings run against the real Cloudflare account (remote: true).
+// It is never deployed.
+{
+  "name": "pubmed-vector-loader",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "ai": { "binding": "AI", "remote": true },
+  "vectorize": [{ "binding": "VECTORIZE", "index_name": "pubmed-chunks", "remote": true }]
+}

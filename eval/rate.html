@@ -1,0 +1,214 @@
+<!doctype html>
+<!--
+  Ranking evaluation, step 2: Juan rates each article in pool.json (made by eval/fetch_runs.mjs) for its question.
+  Open this file in a browser (double-click it; no server needed), choose the run's pool.json, and, to continue or
+  re-use earlier ratings, also choose eval/judgments.csv. Articles already rated are skipped, so after a new run
+  only the new articles are shown. The page never shows which system found an article.
+  Ratings: 2 = answers the question directly, 1 = on topic but answers only part of it, 0 = does not help.
+  Keys: 2 / 1 / 0 to rate (moves on), Left arrow to go back, Right arrow to skip.
+  Progress is kept in this browser as you go (localStorage). "Download judgments.csv" saves every rating, old and
+  new; save it over eval/judgments.csv, then run: node eval/score.mjs eval/runs/<date> eval/judgments.csv
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rate articles</title>
+<style>
+  :root { --bg: #fbfaf7; --fg: #1d232b; --muted: #5b6573; --line: #d9dde3; --accent: #1f5f8b; --card: #fff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #14181d; --fg: #e8ebef; --muted: #a3adba; --line: #313945; --accent: #7fb6dd; --card: #1c2128; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 18px/1.55 system-ui, -apple-system, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 22px; margin: 0 0 12px; }
+  .muted { color: var(--muted); font-size: 15px; }
+  .setup, .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin: 16px 0; }
+  label { display: block; margin: 10px 0; }
+  .question { font-size: 24px; font-weight: 650; margin: 4px 0 0; }
+  .title { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+  .abstract { white-space: pre-wrap; margin-top: 12px; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+  /* Long abstracts: keep the rating buttons on screen. */
+  .sticky { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0; margin: 0; border-top: 1px solid var(--line); }
+  button { font: inherit; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; }
+  button.rate { flex: 1 1 200px; text-align: left; }
+  button.rate.chosen { border-color: var(--accent); outline: 2px solid var(--accent); }
+  button:focus-visible { outline: 3px solid var(--accent); }
+  .bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); width: 0; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  a { color: var(--accent); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Rate articles for the ranking evaluation</h1>
+
+  <section class="setup" id="setup">
+    <label>1. The run's articles (<code>eval/runs/&lt;date&gt;/pool.json</code>):
+      <input type="file" id="poolFile" accept=".json,application/json"></label>
+    <label>2. Earlier ratings, if any (<code>eval/judgments.csv</code>):
+      <input type="file" id="judgmentsFile" accept=".csv,text/csv"></label>
+    <p class="muted" id="setupNote">Ratings already in that file are skipped. Progress is also kept in this browser.</p>
+  </section>
+
+  <section id="rater" hidden>
+    <div class="row">
+      <span class="muted" id="where"></span>
+      <span class="muted" id="count"></span>
+    </div>
+    <div class="bar" aria-hidden="true"><div id="bar"></div></div>
+
+    <div class="card">
+      <div class="muted">Question</div>
+      <p class="question" id="question"></p>
+    </div>
+
+    <div class="card">
+      <p class="title" id="title"></p>
+      <div class="muted" id="meta"></div>
+      <div class="abstract" id="abstract"></div>
+    </div>
+
+    <div class="buttons sticky" role="group" aria-label="Rating">
+      <button class="rate" data-r="2"><b>2</b> Answers the question directly</button>
+      <button class="rate" data-r="1"><b>1</b> On topic, answers only part</button>
+      <button class="rate" data-r="0"><b>0</b> Does not help answer it</button>
+    </div>
+    <div class="row">
+      <div class="buttons">
+        <button id="back">&larr; Back</button>
+        <button id="skip">Skip &rarr;</button>
+      </div>
+      <button id="download">Download judgments.csv</button>
+    </div>
+    <p class="muted" id="doneNote" hidden>Every article is rated. Download judgments.csv and save it over eval/judgments.csv.</p>
+  </section>
+</main>
+
+<script>
+// State: the pool's questions, a flat list of [question, article] items to rate, and ratings keyed "qid|pmid".
+let pool = null;
+let items = [];
+let pos = 0;
+const ratings = new Map();   // "qid|pmid" -> { qid, pmid, rating, rated_at }
+let storeKey = 'rate:none';
+
+const $ = (id) => document.getElementById(id);
+
+// localStorage can be missing or blocked (private windows); the page still works, it just does not remember.
+function saveLocal() {
+  try { localStorage.setItem(storeKey, JSON.stringify([...ratings.values()])); } catch { /* not available */ }
+}
+function loadLocal() {
+  try { for (const r of JSON.parse(localStorage.getItem(storeKey) || '[]')) keep(r); }
+  catch { /* not available */ }
+}
+
+// Add a rating unless a newer one for the same article is already known, so loading an older judgments.csv never
+// undoes newer progress kept in the browser, and the other way round. Ratings without a time count as oldest.
+function keep(r) {
+  const key = `${r.qid}|${r.pmid}`;
+  const old = ratings.get(key);
+  if (!old || String(r.rated_at || '') >= String(old.rated_at || '')) ratings.set(key, r);
+}
+
+// Minimal CSV reader for judgments.csv (qid, pmid, rating, rated_at); values have no commas or quotes.
+function parseJudgments(text) {
+  const [header, ...lines] = text.replace(/^﻿/, '').trim().split(/\r?\n/);
+  const cols = header.split(',').map((c) => c.trim());
+  return lines.filter(Boolean).map((l) => Object.fromEntries(l.split(',').map((v, i) => [cols[i], v.trim()])));
+}
+
+// Build the list to rate: every article in the pool that has no rating yet, question by question.
+function buildItems() {
+  items = [];
+  for (const q of pool.questions) for (const a of q.articles) if (!ratings.has(`${q.qid}|${a.pmid}`)) items.push({ q, a });
+  pos = 0;
+}
+
+function totals() {
+  let all = 0, done = 0;
+  for (const q of pool.questions) for (const a of q.articles) { all++; if (ratings.has(`${q.qid}|${a.pmid}`)) done++; }
+  return { all, done };
+}
+
+function show() {
+  const { all, done } = totals();
+  $('count').textContent = `${done} of ${all} rated`;
+  $('bar').style.width = `${all ? (100 * done) / all : 0}%`;
+  $('doneNote').hidden = done < all;
+  const item = items[pos];
+  if (!item) {
+    $('where').textContent = items.length ? 'End of list' : 'Nothing left to rate';
+    for (const id of ['question', 'title', 'meta', 'abstract']) $(id).textContent = '';
+    return;
+  }
+  const { q, a } = item;
+  const n = pool.questions.indexOf(q) + 1;
+  $('where').textContent = `Question ${n} of ${pool.questions.length} · article ${pos + 1} of ${items.length} left`;
+  $('question').textContent = q.question;
+  $('title').textContent = a.title;
+  $('meta').innerHTML = '';
+  $('meta').append(`${a.journal || ''}${a.year ? `, ${a.year}` : ''} · `);
+  const link = Object.assign(document.createElement('a'), { href: `https://pubmed.ncbi.nlm.nih.gov/${a.pmid}/`, target: '_blank', rel: 'noopener', textContent: `PMID ${a.pmid}` });
+  $('meta').append(link);
+  $('abstract').textContent = a.abstract || '(No abstract. Open the PubMed link to read it.)';
+  const current = ratings.get(`${q.qid}|${a.pmid}`);
+  document.querySelectorAll('button.rate').forEach((b) => b.classList.toggle('chosen', current && String(current.rating) === b.dataset.r));
+}
+
+function rate(r) {
+  const item = items[pos];
+  if (!item) return;
+  ratings.set(`${item.q.qid}|${item.a.pmid}`, { qid: item.q.qid, pmid: item.a.pmid, rating: r, rated_at: new Date().toISOString() });
+  saveLocal();
+  if (pos < items.length) pos++;
+  show();
+}
+
+function download() {
+  const rows = [...ratings.values()].sort((x, y) => Number(x.qid) - Number(y.qid) || Number(x.pmid) - Number(y.pmid));
+  const csv = ['qid,pmid,rating,rated_at', ...rows.map((r) => `${r.qid},${r.pmid},${r.rating},${r.rated_at || ''}`)].join('\n') + '\n';
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  Object.assign(document.createElement('a'), { href: url, download: 'judgments.csv' }).click();
+  URL.revokeObjectURL(url);
+}
+
+$('poolFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  pool = JSON.parse(await file.text());
+  storeKey = `rate:${pool.created || file.name}`;
+  loadLocal();
+  buildItems();
+  $('rater').hidden = false;
+  show();
+});
+
+$('judgmentsFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  for (const r of parseJudgments(await file.text())) {
+    if (r.rating !== '' && r.rating != null) keep({ ...r, rating: Number(r.rating) });
+  }
+  $('setupNote').textContent = `Loaded ${ratings.size} earlier ratings; those articles are skipped.`;
+  if (pool) { saveLocal(); buildItems(); show(); }
+});
+
+document.querySelectorAll('button.rate').forEach((b) => b.addEventListener('click', () => rate(Number(b.dataset.r))));
+$('back').addEventListener('click', () => { if (pos > 0) { pos--; show(); } });
+$('skip').addEventListener('click', () => { if (pos < items.length) { pos++; show(); } });
+$('download').addEventListener('click', download);
+document.addEventListener('keydown', (e) => {
+  if (!pool || e.target.tagName === 'INPUT') return;
+  if (['0', '1', '2'].includes(e.key)) rate(Number(e.key));
+  else if (e.key === 'ArrowLeft' && pos > 0) { pos--; show(); }
+  else if (e.key === 'ArrowRight' && pos < items.length) { pos++; show(); }
+});
+</script>
+</body>
+</html>

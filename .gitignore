@@ -1,0 +1,28 @@
+# Secrets: API keys live in Cloudflare Worker secrets, never in the repo
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Dependencies and build output
+node_modules/
+dist/
+.wrangler/
+
+# Editor and OS files
+.DS_Store
+.vscode/
+*.log
+
+# Local assistant config
+.claude/
+CLAUDE.md
+
+# PubMed harvest output (about 1 GB): kept in Google Drive, Project/data/pubmed
+data/
+
+# Python
+__pycache__/
+*.pyc

@@ -1,0 +1,54 @@
+/* Aging & Lifestyle Research Explorer tokens as CSS variables, compiled from tokens.json. Change values there first. */
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("fonts/AtkinsonHyperlegibleNext-Variable.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("fonts/AtkinsonHyperlegibleNext-Italic-Variable.woff2") format("woff2"); font-weight: 200 800; font-style: italic; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible Mono"; src: url("fonts/AtkinsonHyperlegibleMono-Variable.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+:root, [data-theme="light"] {
+  --surface: #f5f7fa;
+  --surface-raised: #ffffff;
+  --surface-sunk: #e8edf2;
+  --line: #d2d9e1;
+  --line-strong: #5f6f85;
+  --ink: #14202e;
+  --ink-muted: #42516a;
+  --brand: #0f5a78;
+  --brand-strong: #0a4359;
+  --on-brand: #ffffff;
+  --brand-soft: #d9ecf3;
+  --evidence: #964700;
+  --evidence-soft: #fbe7d0;
+  --shadow-answer: 0 1px 2px #14202e14, 0 12px 32px -12px #14202e33;
+  --focus-ring: 0 0 0 3px #f5f7fa, 0 0 0 6px #0f5a78;
+}
+[data-theme="dark"] {
+  --surface: #10161d;
+  --surface-raised: #19222c;
+  --surface-sunk: #0a0f14;
+  --line: #2d3947;
+  --line-strong: #8595a9;
+  --ink: #eef2f6;
+  --ink-muted: #adb9c7;
+  --brand: #7cc7e3;
+  --brand-strong: #a6dbee;
+  --on-brand: #0a1a22;
+  --brand-soft: #12303d;
+  --evidence: #f5b56b;
+  --evidence-soft: #3d2609;
+  --shadow-answer: 0 12px 32px -12px #000000cc;
+  --focus-ring: 0 0 0 3px #10161d, 0 0 0 6px #7cc7e3;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --font-sans: "Atkinson Hyperlegible Next", Verdana, system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, Menlo, monospace;
+}
